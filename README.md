@@ -4,7 +4,7 @@
 
 * * *
 
-> ⚽ [공튀기기 게임 분석](https://github.com/YUM-MING/The-Adventures-Of-The-Seven/blob/main/%EA%B3%B5%ED%8A%80%EA%B8%B0%EA%B8%B0%20%EA%B2%8C%EC%9E%84.md)<br>
+> ⚽ [공 튀기기 게임 분석](https://github.com/YUM-MING/The-Adventures-Of-The-Seven/blob/main/%EA%B3%B5%ED%8A%80%EA%B8%B0%EA%B8%B0%20%EA%B2%8C%EC%9E%84.md)<br>
 > 🐍 [뱀 게임 분석](https://github.com/YUM-MING/The-Adventures-Of-The-Seven/blob/main/%EB%B1%80%20%EA%B2%8C%EC%9E%84.md) <br>
 > 🔓 [미로 탈출 게임 분석](https://github.com/YUM-MING/The-Adventures-Of-The-Seven/blob/main/%EB%AF%B8%EB%A1%9C%20%ED%83%88%EC%B6%9C%20%EA%B2%8C%EC%9E%84.md)
 
@@ -58,7 +58,7 @@
 설정한 넓이와 높이로 스크린 설정
 #### ✓ pygame.display.set_caption :Bounce Ball Game, Snake Game, Maze Escape '
 스크린 이름을 다음과 같이 설정
-<br>
+<br><br>
 
 ## 팀원 소개
 
