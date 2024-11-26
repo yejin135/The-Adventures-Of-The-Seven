@@ -4,99 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bounce Ball Game</title>
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: black;
-        }
-        canvas {
-            display: block;
-            background: black;
-        }
-    </style>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <h1>Bounce Ball Game</h1>
+    <py-script>
+        import pygame
+        import sys
 
-    <script>
-        // 캔버스 초기화
-        const canvas = document.getElementById("gameCanvas");
-        const ctx = canvas.getContext("2d");
+        pygame.init()
+        WIDTH, HEIGHT = 800, 600
+        screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption("Bounce Ball Game")
 
-        // 게임 변수
-        const WIDTH = canvas.width;
-        const HEIGHT = canvas.height;
-        const PADDLE_WIDTH = 120;
-        const PADDLE_HEIGHT = 20;
-        const BALL_SIZE = 20;
+        WHITE = (255, 255, 255)
+        BLACK = (0, 0, 0)
+        RED = (255, 0, 0)
 
-        let ballX = WIDTH / 2;
-        let ballY = HEIGHT / 2;
-        let ballSpeedX = 5;
-        let ballSpeedY = 5;
+        ball = pygame.Rect(WIDTH // 2, HEIGHT // 2, 20, 20)
+        paddle = pygame.Rect(WIDTH // 2 - 60, HEIGHT - 30, 120, 20)
+        ball_speed = [5, 5]
+        paddle_speed = 10
 
-        let paddleX = WIDTH / 2 - PADDLE_WIDTH / 2;
-        const paddleSpeed = 10;
+        clock = pygame.time.Clock()
 
-        let isGameOver = false;
+        while True:
+            screen.fill(BLACK)
 
-        // 키보드 입력
-        let keys = {};
-        document.addEventListener("keydown", (e) => keys[e.key] = true);
-        document.addEventListener("keyup", (e) => keys[e.key] = false);
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
-        // 게임 루프
-        function gameLoop() {
-            if (isGameOver) return;
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_LEFT] and paddle.left > 0:
+                paddle.move_ip(-paddle_speed, 0)
+            if keys[pygame.K_RIGHT] and paddle.right < WIDTH:
+                paddle.move_ip(paddle_speed, 0)
 
-            // 화면 지우기
-            ctx.clearRect(0, 0, WIDTH, HEIGHT);
+            ball.x += ball_speed[0]
+            ball.y += ball_speed[1]
 
-            // 공 이동
-            ballX += ballSpeedX;
-            ballY += ballSpeedY;
+            if ball.left <= 0 or ball.right >= WIDTH:
+                ball_speed[0] = -ball_speed[0]
+            if ball.top <= 0:
+                ball_speed[1] = -ball_speed[1]
+            if ball.colliderect(paddle):
+                ball_speed[1] = -ball_speed[1]
 
-            // 벽에 튕기기
-            if (ballX <= 0 || ballX + BALL_SIZE >= WIDTH) ballSpeedX = -ballSpeedX;
-            if (ballY <= 0) ballSpeedY = -ballSpeedY;
+            if ball.bottom >= HEIGHT:
+                print("Game Over")
+                pygame.quit()
+                sys.exit()
 
-            // 패들 충돌
-            if (ballY + BALL_SIZE >= HEIGHT - PADDLE_HEIGHT &&
-                ballX + BALL_SIZE >= paddleX &&
-                ballX <= paddleX + PADDLE_WIDTH) {
-                ballSpeedY = -ballSpeedY;
-            }
+            pygame.draw.ellipse(screen, WHITE, ball)
+            pygame.draw.rect(screen, RED, paddle)
 
-            // 바닥에 닿으면 게임 종료
-            if (ballY + BALL_SIZE >= HEIGHT) {
-                isGameOver = true;
-                alert("Game Over");
-                return;
-            }
-
-            // 패들 이동
-            if (keys["ArrowLeft"] && paddleX > 0) paddleX -= paddleSpeed;
-            if (keys["ArrowRight"] && paddleX + PADDLE_WIDTH < WIDTH) paddleX += paddleSpeed;
-
-            // 공 그리기
-            ctx.fillStyle = "white";
-            ctx.beginPath();
-            ctx.arc(ballX + BALL_SIZE / 2, ballY + BALL_SIZE / 2, BALL_SIZE / 2, 0, Math.PI * 2);
-            ctx.fill();
-
-            // 패들 그리기
-            ctx.fillStyle = "red";
-            ctx.fillRect(paddleX, HEIGHT - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT);
-
-            requestAnimationFrame(gameLoop);
-        }
-
-        // 게임 시작
-        gameLoop();
-    </script>
+            pygame.display.flip()
+            clock.tick(60)
+    </py-script>
 </body>
 </html>
