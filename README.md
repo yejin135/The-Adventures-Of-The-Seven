@@ -56,7 +56,7 @@
 뱀 게임 = 600, 400
 #### ✓ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 설정한 넓이와 높이로 스크린 설정
-#### ✓ pygame.display.set_caption :Bounce Ball Game, Snake Game, Maze Escape '
+#### ✓ pygame.display.set_caption :Bounce Ball Game, Snake Game, Maze Escape
 스크린 이름을 다음과 같이 설정
 <br><br>
 
